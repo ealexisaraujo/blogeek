@@ -1,8 +1,20 @@
 class Autenticacion {
   autEmailPass (email, password) {
-    //$('#avatar').attr('src', 'imagenes/usuario_auth.png')
-    //Materialize.toast(`Bienvenido ${result.user.displayName}`, 5000)
-    //$('.modal').modal('close')
+    firebase.auth().signInWithEmailAndPassword(email, password)
+      .then(result => {
+        if(result.user.emailVerified){
+          $('#avatar').attr('src', 'imagenes/usuario_auth.png')
+          Materialize.toast(`Bienvenido ${result.user.displayName}`, 5000)
+        } else {
+          firebase.auth().signOut()
+          Materialize.toast(`Porfavor realiza la verificacion de la cuenta`, 5000)
+        }
+      })
+      .catch(error => {
+        console.log(error);
+        Materialize.toast(error.message, 4000)
+      })
+    $('.modal').modal('close')
   }
 
   crearCuentaEmailPass (email, password, nombres) {
@@ -17,7 +29,7 @@ class Autenticacion {
       }
 
       result.user.sendEmailVerification(configuracion).catch(error => {
-        console.error(error);
+        console.log(error);
         Materialize.toast(error.message, 4000)
       })
 
