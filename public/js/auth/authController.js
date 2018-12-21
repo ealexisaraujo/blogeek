@@ -1,6 +1,5 @@
 $(() => {    
     const objAuth = new Autenticacion()
-    //$("#authFB").click(() => );
 
     $("#btnRegistroEmail").click(() => {
         const nombres = $('#nombreContactoReg').val();
