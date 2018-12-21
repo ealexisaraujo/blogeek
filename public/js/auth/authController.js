@@ -23,6 +23,10 @@ $(() => {
     $("#authGoogle").click(() => objAuth.authCuentaGoogle())
 
     //$("#authTwitter").click(() => //AUTH con Twitter);
+    $("#authTwitter").click(() => objAuth.authTwitter());
+
+    //$("#authFB").click(() => //AUTH con facebook);
+    $("#authFB").click(() => objAuth.authCuentaFacebook())
 
     $('#btnRegistrarse').click(() => {
         $('#modalSesion').modal('close');
