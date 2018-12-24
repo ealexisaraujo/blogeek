@@ -27,7 +27,7 @@ class Post {
   }
 
   consultarTodosPost () {
-    this.db.collection('posts').onSnapshot(querySnapshot=> {
+    this.db.collection('posts').orderBy('fecha', 'asc').orderBy('titulo','asc').onSnapshot(querySnapshot=> {
       $('#posts').empty()
       if (querySnapshot.empty) {
         $('#posts').append(this.obtenerTemplatePostVacio())
@@ -50,6 +50,7 @@ class Post {
   consultarPostxUsuario (emailUser) {
     this.db
       .collection('posts')
+      .orderBy('fecha','asc')
       .where('autor', '==', emailUser)
       .onSnapshot(querySnapshot => {
         $('#posts').empty()

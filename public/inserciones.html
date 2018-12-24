@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Test Firestore</title>
+    <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-app.js"></script>    
+    <script src="https://www.gstatic.com/firebasejs/5.0.0/firebase-firestore.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+          apiKey: "AIzaSyDhlanKVSau8uV8-_9wqKc_C0CL-8_8lQs",
+          authDomain: "geekblog-e745e.firebaseapp.com",
+          databaseURL: "https://geekblog-e745e.firebaseio.com",
+          projectId: "geekblog-e745e",
+          storageBucket: "geekblog-e745e.appspot.com",
+          messagingSenderId: "688690381695"
+        };
+        firebase.initializeApp(config);
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="js/firestore.js"></script>
+    <body> 
+        <div>
+            <button id="btnAdd">Add</button>
+            <button id="btnBatch">Batch</button>
+            <button id="btnAddKey">AddKey</button>
+            <button id="btnAddWithMerge">Add Merge</button>
+            <button id="btnupdate">Update</button>
+            <button id="btnUpdateObject">Update Object</button>
+            <button id="btnDeleteFields">Delete Fields</button>
+            <button id="btnQuerySingle">Query Single</button>
+            <button id="queryByTitulo">Query By Titulo</button>
+            <button id="queryAllPosts">All Posts</button>
+            <button id="queryPostsByTituloAndAutor">Query Titulo Autor</button>
+            <button id="btnDelete">Delete</button>
+        </div>
+    </body>
+</head>
+
+<body>
+
+</body>
+
+</html>
