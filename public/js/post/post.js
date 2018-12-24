@@ -71,6 +71,32 @@ class Post {
         }
       })
   }
+
+  subirImagenPost (file, uid) {
+    const refStorage = firebase.storage().ref(`imgsPosts/${uid}/${file.name}`)
+    const task = refStorage.put(file)
+
+    task.on('state_changed',
+      snapshot => {
+        const porcentage = snapshot.bytesTransferred / snapshot.totalBytes * 100
+        $('.determinate').attr('style', `width: ${porcentage}%`)
+      },
+      err => {
+        Materialize.toast(`Error subiendo archivo => ${err.messaage}`, 4000)
+      },
+      () => {
+        task.snapshot.ref.getDownloadURL()
+        .then(url => {
+            console.log(url)
+            sessionStorage.setItem('imgNewPost', url)
+        }).catch(err => {
+          Materialize.toast(`Error obteniendo downloadURL => ${err}`, 4000)
+        })
+        }
+      )
+  }
+
+
   obtenerTemplatePostVacio () {
     return `<article class="post">
       <div class="post-titulo">
