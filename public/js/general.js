@@ -15,7 +15,7 @@ $(() => {
   })
   // TODO: Registrar credenciales
   const messaging  = firebase.messaging()
-  messaging.usePublicVapiKey(
+  messaging.usePublicVapidKey(
     'BNZhn4wGUBLYQZfRjgN_1IPt1CjDG7CPR1I3EArbh6AspkhJVvdn9kpeirvv5zh1FqcUPiqfcTsHnACcCSWFJGU'
   )
 
