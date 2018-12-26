@@ -25,6 +25,7 @@ $(() => {
     console.log("Permiso otorgado")
     return messaging.getToken()
   }).then(token => {
+    console.log(`Token => ${token}`)
     const db = firebase.firestore()
     const settings = { timestampsInSnapshots: true }
     db.collection('tokens')
