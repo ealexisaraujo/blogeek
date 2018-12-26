@@ -2,6 +2,9 @@ $(() => {
   $('.tooltipped').tooltip({ delay: 50 })
   $('.modal').modal()
 
+   // Init Firebase nuevamente
+   firebase.initializeApp(varConfig);
+
   // TODO: Adicionar el service worker
   navigator.serviceWorker.register('notificaciones-sw.js')
   .then(registro => {
@@ -15,8 +18,6 @@ $(() => {
   messaging.usePublicVapiKey(
     'BNZhn4wGUBLYQZfRjgN_1IPt1CjDG7CPR1I3EArbh6AspkhJVvdn9kpeirvv5zh1FqcUPiqfcTsHnACcCSWFJGU'
   )
-  // Init Firebase nuevamente
-  firebase.initializeApp(varConfig);
 
   // TODO: Solicitar permisos para las notificaciones
   messaging.requestPermission()
@@ -35,7 +36,27 @@ $(() => {
     })
   })
 
+  // Obtener token cuando se hace refresh
+  messaging.onTokenRefresh(() => {
+    messaging.getToken()
+    .then(token =>{
+    console.log(`token se ha renovado`)
+    const db = firebase.firestore()
+    const settings = { timestampsInSnapshots: true }
+    db.collection('tokens')
+    .doc(token)
+    .set({
+      token: token
+      }).catch(error => {
+      console.log(`Error al insertar el token en la BD => ${error}`);
+        })
+    })
+  })
+
   // TODO: Recibir las notificaciones cuando el usuario esta foreground
+  messaging.onMessage(payload => {
+    Materialize.toast(`Ya tenemos un nuevo post. Revisalo, se llama ${payload.data.titulo}`, 6000)
+  })
 
   // TODO: Recibir las notificaciones cuando el usuario esta background
 
