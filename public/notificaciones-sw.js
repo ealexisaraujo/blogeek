@@ -17,7 +17,7 @@ importScripts('https://www.gstatic.com/firebasejs/5.5.8/firebase-messaging.js')
      click_action: "http://geekblog-e745e.firebaseapp.com"
    }
 
-   return self.registration.showNotificacion(
+   return self.registration.showNotification(
      tituloNotificacion,
      opcionesNotificacion
    )
