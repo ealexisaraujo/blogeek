@@ -20,38 +20,51 @@ $(() => {
   )
 
   // TODO: Solicitar permisos para las notificaciones
-  messaging.requestPermission()
-  .then(() => {
-    console.log("Permiso otorgado")
-    return messaging.getToken()
-  }).then(token => {
-    console.log(`Token => ${token}`)
-    const db = firebase.firestore()
-    const settings = { timestampsInSnapshots: true }
-    db.collection('tokens')
-    .doc(token)
-    .set({
-      token: token
-    }).catch(error => {
-      console.log(`Error al insertar el token en la BD => ${error}`);
+  messaging
+    .requestPermission()
+    .then(() => {
+      console.log('permiso otorgado')
+      return messaging.getToken()
     })
-  })
+    .then(token => {
+      console.log('token')
+      console.log(token)
+      sessionStorage.setItem('token', token)
+      const db = firebase.firestore()
+      db.settings({ timestampsInSnapshots: true })
+      db.collection('tokens')
+        .add({
+          token: token
+        })
+        .catch(err => {
+          console.error(`Error insertando el token en la BD => ${err}`)
+        })
+    })
+    .catch(function (err) {
+      console.error(`No se dio el permiso para la notificación => ${err}`)
+    })
 
   // Obtener token cuando se hace refresh
   messaging.onTokenRefresh(() => {
-    messaging.getToken()
-    .then(token =>{
-    console.log(`token se ha renovado`)
-    const db = firebase.firestore()
-    const settings = { timestampsInSnapshots: true }
-    db.collection('tokens')
-    .doc(token)
-    .set({
-      token: token
-      }).catch(error => {
-      console.log(`Error al insertar el token en la BD => ${error}`);
-        })
-    })
+    messaging
+      .getToken()
+      .then(refreshedToken => {
+        console.log('Token refreshed.')
+        sessionStorage.setItem('token', refreshedToken)
+        const db = firebase.firestore()
+        db.settings({ timestampsInSnapshots: true })
+        db.collection('tokens')
+          .doc(refreshedToken)
+          .update({
+            token: refreshedToken
+          })
+          .catch(err => {
+            console.error(`Error al actualizar el token a la BD => ${err}`)
+          })
+      })
+      .catch(err => {
+        console.log(`No es posible recuperar el token actualizado => ${err}`)
+      })
   })
 
   // TODO: Recibir las notificaciones cuando el usuario esta foreground
@@ -124,7 +137,7 @@ $(() => {
       post.consultarPostxUsuario(user.email)
       $('#tituloPost').text('Mis Posts')
     } else {
-      Materialize.toast(`Debes estar autenticado para ver tus posts`, 4000)    
+      Materialize.toast(`Debes estar autenticado para ver tus posts`, 4000)
     }
   })
 })
