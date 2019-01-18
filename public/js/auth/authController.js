@@ -6,7 +6,6 @@ $(() => {
         const email = $('#emailContactoReg').val();
         const password = $('#passwordReg').val();
         // TODO : LLamar crear cuenta con email
-        const auth = new Autenticacion()
         auth.crearCuentaEmailPass(email, password, nombres)
     });
 
@@ -14,7 +13,6 @@ $(() => {
         const email = $('#emailSesion').val();
         const password = $('#passwordSesion').val();
         // TODO : LLamar auth cuenta con email
-        const auth = new Autenticacion()
         auth.autEmailPass(email, password)
     });
 
